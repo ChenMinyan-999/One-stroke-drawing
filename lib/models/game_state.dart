@@ -84,12 +84,13 @@ class GameState extends ChangeNotifier {
     return false;
   }
 
-  /// 拖动中尝试吸附到下一个未访问花朵。若新线段会交叉则拒绝。
+  /// 拖动中尝试吸附到下一个未访问花朵。若两点无预设道路或线段会交叉则拒绝。
   bool tryExtend(int group, int point) {
     if (group != _activeGroup) return false;
 
     final path = _paths[group];
     if (path.isEmpty || path.contains(point)) return false;
+    if (!level.groups[group].allowsEdge(path.last, point)) return false;
 
     final points = level.groups[group].points;
     final from = points[path.last];
@@ -110,6 +111,7 @@ class GameState extends ChangeNotifier {
     final points = level.groups[group].points;
     if (path.length != points.length) return false;
     if (path.isEmpty || path.first != point) return false;
+    if (!level.groups[group].allowsEdge(path.last, point)) return false;
 
     final from = points[path.last];
     final to = points[point];

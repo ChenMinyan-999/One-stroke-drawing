@@ -114,6 +114,7 @@ class _FlowerBoardPainter extends CustomPainter {
     final flowerR = (size.shortestSide * 0.046).clamp(13.0, 22.0);
 
     _paintBackground(canvas, size);
+    _paintRoads(canvas, size, lineWidth);
     _paintHint(canvas, size, lineWidth);
     _paintSegments(canvas, size, lineWidth);
     _paintDragLine(canvas, size, lineWidth);
@@ -129,6 +130,27 @@ class _FlowerBoardPainter extends CustomPainter {
         colors: [Palette.meadowTop, Palette.meadowBottom],
       ).createShader(rect);
     canvas.drawRect(rect, paint);
+  }
+
+  /// 绘制预设道路：以淡色虚线展示允许直接相连的点对。
+  void _paintRoads(Canvas canvas, Size size, double lineWidth) {
+    final level = state.level;
+    for (var g = 0; g < level.groups.length; g++) {
+      final edges = level.groups[g].edges;
+      if (edges == null) continue;
+
+      final points = level.groups[g].points;
+      final paint = Paint()
+        ..color = Palette.inkSoft.withValues(alpha: 0.45)
+        ..strokeWidth = lineWidth * 0.5
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke;
+      for (final (i, j) in edges) {
+        final a = _toPixel(points[i], size);
+        final b = _toPixel(points[j], size);
+        _drawDashedLine(canvas, a, b, paint);
+      }
+    }
   }
 
   void _paintSegments(Canvas canvas, Size size, double lineWidth) {

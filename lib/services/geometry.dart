@@ -55,8 +55,9 @@ bool isNonCrossingPath(List<Offset> points, List<int> order) {
 
 /// 计算点集的一条不交叉哈密顿回路（首尾相连的一笔闭环顺序）。
 /// 返回点的索引顺序，顺序中相邻点依次连线且最后一点连回第一点；不存在则返回 null。
+/// [edges] 为预设道路（允许的相邻点对），null 表示任意两点都可相连。
 /// 仅用于小规模点集（<= 8），暴力枚举全排列。
-List<int>? solveNonCrossingCycle(List<Offset> points) {
+List<int>? solveNonCrossingCycle(List<Offset> points, {List<(int, int)>? edges}) {
   final n = points.length;
   if (n == 0) return const [];
   if (n == 1) return const [0];
@@ -64,13 +65,18 @@ List<int>? solveNonCrossingCycle(List<Offset> points) {
 
   final indices = List<int>.generate(n, (i) => i);
   for (final order in _permutations(indices)) {
-    if (isNonCrossingCycle(points, order)) return order;
+    if (isNonCrossingCycle(points, order, edges: edges)) return order;
   }
   return null;
 }
 
-/// 给定点与顺序，判断该顺序连成的闭环（含最后一点连回第一点）是否全程不交叉。
-bool isNonCrossingCycle(List<Offset> points, List<int> order) {
+/// 给定点与顺序，判断该顺序连成的闭环（含最后一点连回第一点）是否全程不交叉，
+/// 且相邻点之间满足预设道路约束。
+bool isNonCrossingCycle(
+  List<Offset> points,
+  List<int> order, {
+  List<(int, int)>? edges,
+}) {
   final n = order.length;
   if (n == 0) return true;
   if (n == 1) return true;
@@ -78,7 +84,10 @@ bool isNonCrossingCycle(List<Offset> points, List<int> order) {
 
   final segs = <(Offset, Offset)>[];
   for (var i = 0; i < n; i++) {
-    segs.add((points[order[i]], points[order[(i + 1) % n]]));
+    final a = order[i];
+    final b = order[(i + 1) % n];
+    if (edges != null && !_hasEdge(edges, a, b)) return false;
+    segs.add((points[a], points[b]));
   }
   for (var i = 0; i < segs.length; i++) {
     for (var j = i + 1; j < segs.length; j++) {
@@ -88,6 +97,13 @@ bool isNonCrossingCycle(List<Offset> points, List<int> order) {
     }
   }
   return true;
+}
+
+bool _hasEdge(List<(int, int)> edges, int a, int b) {
+  for (final (i, j) in edges) {
+    if ((i == a && j == b) || (i == b && j == a)) return true;
+  }
+  return false;
 }
 
 /// 0 共线、1 逆时针、2 顺时针。

@@ -61,6 +61,15 @@ void main() {
     expect(solveNonCrossingCycle(two), isNull);
   });
 
+  test('预设道路限制下求解闭环', () {
+    const pts = [Offset(0, 0), Offset(1, 0), Offset(0, 1)];
+    const full = [(0, 1), (1, 2), (0, 2)];
+    expect(solveNonCrossingCycle(pts, edges: full), isNotNull);
+
+    const missing = [(0, 1), (1, 2)];
+    expect(solveNonCrossingCycle(pts, edges: missing), isNull);
+  });
+
   test('退化输入', () {
     expect(solveNonCrossingPath(const []), isEmpty);
     expect(solveNonCrossingPath(const [Offset(0.5, 0.5)]), const [0]);

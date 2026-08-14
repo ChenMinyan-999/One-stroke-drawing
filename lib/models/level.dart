@@ -8,7 +8,20 @@ class FlowerGroup {
   /// 该颜色下所有花朵的归一化坐标。
   final List<Offset> points;
 
-  const FlowerGroup(this.colorIndex, this.points);
+  /// 预设道路：允许直接相连的点索引对。为 null 时表示任意两点都可相连。
+  final List<(int, int)>? edges;
+
+  const FlowerGroup(this.colorIndex, this.points, {this.edges});
+
+  /// 判断点 [a]、[b] 之间是否存在预设道路（无预设道路时为任意相连）。
+  bool allowsEdge(int a, int b) {
+    final e = edges;
+    if (e == null) return true;
+    for (final (i, j) in e) {
+      if ((i == a && j == b) || (i == b && j == a)) return true;
+    }
+    return false;
+  }
 }
 
 class Level {

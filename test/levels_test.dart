@@ -7,7 +7,7 @@ void main() {
   test('每个关卡每种颜色都存在不交叉的首尾相连闭环解', () {
     for (final level in levels) {
       for (final group in level.groups) {
-        final order = solveNonCrossingCycle(group.points);
+        final order = solveNonCrossingCycle(group.points, edges: group.edges);
         expect(
           order,
           isNotNull,

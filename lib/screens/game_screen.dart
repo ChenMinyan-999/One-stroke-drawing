@@ -102,7 +102,11 @@ class _GameScreenState extends State<GameScreen> {
         _hint = {
           for (var g = 0; g < _level.groups.length; g++)
             if (!_state.isGroupComplete(g))
-              g: solveNonCrossingCycle(_level.groups[g].points) ?? const [],
+              g: solveNonCrossingCycle(
+                    _level.groups[g].points,
+                    edges: _level.groups[g].edges,
+                  ) ??
+                  const [],
         };
       } else {
         _hint = null;
