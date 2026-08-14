@@ -45,20 +45,28 @@ class FlowerBoard extends StatelessWidget {
   void _onUpdate(Size size, Offset local) {
     if (!state.hasActive) return;
     state.updateDrag(_toNormalized(size, local));
-    final hit = _nearestFlower(size, local, onlyGroup: state.activeGroup);
-    if (hit != null) {
+    final hit = _nearestFlower(
+      size,
+      local,
+      onlyGroup: state.activeGroup,
+      allowClose: true,
+    );
+    if (hit == null) return;
+    if (!state.tryClose(hit.$1, hit.$2)) {
       state.tryExtend(hit.$1, hit.$2);
     }
   }
 
   /// 命中检测：返回 (颜色组索引, 花朵索引)。
   ///
-  /// [onlyGroup] 限定某颜色；[allowHead] 允许命中该组头部（用于接续一笔）。
+  /// [onlyGroup] 限定某颜色；[allowHead] 允许命中该组头部（用于接续一笔）；
+  /// [allowClose] 允许命中待闭合组的起点（用于首尾相连）。
   (int, int)? _nearestFlower(
     Size size,
     Offset local, {
     int? onlyGroup,
     bool allowHead = false,
+    bool allowClose = false,
   }) {
     (int, int)? best;
     var bestDist = _snapRadius;
@@ -71,9 +79,13 @@ class FlowerBoard extends StatelessWidget {
 
       for (var p = 0; p < points.length; p++) {
         final isHead = path.isNotEmpty && path.last == p;
+        final isTail = path.isNotEmpty && path.first == p;
         final isUnvisited = !path.contains(p);
-        if (!allowHead && !isUnvisited) continue;
-        if (allowHead && !isHead && !isUnvisited) continue;
+
+        final selectable = isUnvisited ||
+            (allowHead && isHead) ||
+            (allowClose && isTail && state.canClose(g));
+        if (!selectable) continue;
 
         final pos = Offset(points[p].dx * size.width, points[p].dy * size.height);
         final dist = (pos - local).distance;
@@ -168,6 +180,12 @@ class _FlowerBoardPainter extends CustomPainter {
       for (var i = 0; i < order.length - 1; i++) {
         final a = _toPixel(points[order[i]], size);
         final b = _toPixel(points[order[i + 1]], size);
+        _drawDashedLine(canvas, a, b, paint);
+      }
+      // 首尾相连的闭环段。
+      if (order.length >= 3) {
+        final a = _toPixel(points[order.last], size);
+        final b = _toPixel(points[order.first], size);
         _drawDashedLine(canvas, a, b, paint);
       }
     });

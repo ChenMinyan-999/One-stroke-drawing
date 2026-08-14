@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  '一笔连起同色的花 · 不交叉 · 不重复',
+                  '一笔连起同色的花 · 首尾相连 · 不交叉 · 不重复',
                   textAlign: TextAlign.center,
                   style: textTheme.bodyLarge?.copyWith(color: Palette.inkSoft),
                 ),
@@ -70,6 +70,7 @@ class HomeScreen extends StatelessWidget {
         content: const Text(
           '· 每关有若干种颜色的花。\n'
           '· 从一朵花开始，手指拖到同色的下一朵，一笔连完该色所有花。\n'
+          '· 连完所有花后，再拖回起点那朵花，把首尾连起来才算完成。\n'
           '· 抬手指后可以换一种颜色继续；接续时需从上一朵花（发光的那朵）开始。\n'
           '· 连线不能交叉，也不能重复经过同一朵花。\n'
           '· 连完所有颜色即过关。',

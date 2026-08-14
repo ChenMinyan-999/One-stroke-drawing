@@ -40,6 +40,27 @@ void main() {
     expect(isNonCrossingPath(pts, order!), isTrue);
   });
 
+  test('正方形四点存在不交叉闭环解', () {
+    const pts = [
+      Offset(0, 0),
+      Offset(1, 0),
+      Offset(1, 1),
+      Offset(0, 1),
+    ];
+    final order = solveNonCrossingCycle(pts);
+    expect(order, isNotNull);
+    expect(order, hasLength(4));
+    expect(isNonCrossingCycle(pts, order!), isTrue);
+  });
+
+  test('三角形存在闭环解，两点闭环无解', () {
+    const tri = [Offset(0, 0), Offset(1, 0), Offset(0, 1)];
+    expect(solveNonCrossingCycle(tri), isNotNull);
+
+    const two = [Offset(0, 0), Offset(1, 0)];
+    expect(solveNonCrossingCycle(two), isNull);
+  });
+
   test('退化输入', () {
     expect(solveNonCrossingPath(const []), isEmpty);
     expect(solveNonCrossingPath(const [Offset(0.5, 0.5)]), const [0]);

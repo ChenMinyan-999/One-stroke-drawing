@@ -4,17 +4,17 @@ import 'package:one_stroke_flower_field/services/geometry.dart';
 import 'package:one_stroke_flower_field/theme/palette.dart';
 
 void main() {
-  test('每个关卡每种颜色都存在不交叉的一笔画解', () {
+  test('每个关卡每种颜色都存在不交叉的首尾相连闭环解', () {
     for (final level in levels) {
       for (final group in level.groups) {
-        final order = solveNonCrossingPath(group.points);
+        final order = solveNonCrossingCycle(group.points);
         expect(
           order,
           isNotNull,
-          reason: '关卡 ${level.id} 颜色 ${group.colorIndex} 无解',
+          reason: '关卡 ${level.id} 颜色 ${group.colorIndex} 无闭环解',
         );
         expect(order!.length, group.points.length);
-        expect(isNonCrossingPath(group.points, order), isTrue);
+        expect(isNonCrossingCycle(group.points, order), isTrue);
       }
     }
   });

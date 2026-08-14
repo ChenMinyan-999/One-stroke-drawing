@@ -102,7 +102,7 @@ class _GameScreenState extends State<GameScreen> {
         _hint = {
           for (var g = 0; g < _level.groups.length; g++)
             if (!_state.isGroupComplete(g))
-              g: solveNonCrossingPath(_level.groups[g].points) ?? const [],
+              g: solveNonCrossingCycle(_level.groups[g].points) ?? const [],
         };
       } else {
         _hint = null;
@@ -194,7 +194,8 @@ class _ProgressChips extends StatelessWidget {
                       Palette.flowers[level.groups[g].colorIndex],
                 ),
                 label: Text(
-                  '${state.pathOf(g).length}/${level.groups[g].points.length}',
+                  '${state.visitedCount(g)}/${level.groups[g].points.length}'
+                  '${state.isGroupComplete(g) ? ' ✓' : ''}',
                   style: const TextStyle(color: Palette.ink),
                 ),
               ),
