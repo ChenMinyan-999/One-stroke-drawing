@@ -48,20 +48,6 @@ final List<Level> levels = [
   ),
   const Level(
     id: 4,
-    name: '六瓣花冠',
-    groups: [
-      FlowerGroup(0, [
-        Offset(0.50, 0.16),
-        Offset(0.79, 0.33),
-        Offset(0.79, 0.67),
-        Offset(0.50, 0.84),
-        Offset(0.21, 0.67),
-        Offset(0.21, 0.33),
-      ]),
-    ],
-  ),
-  const Level(
-    id: 5,
     name: '双色初现',
     groups: [
       FlowerGroup(0, [
@@ -77,7 +63,7 @@ final List<Level> levels = [
     ],
   ),
   const Level(
-    id: 6,
+    id: 5,
     name: '同心花环',
     groups: [
       FlowerGroup(0, [
@@ -93,28 +79,7 @@ final List<Level> levels = [
     ],
   ),
   const Level(
-    id: 7,
-    name: '三色田园',
-    groups: [
-      FlowerGroup(0, [
-        Offset(0.34, 0.18),
-        Offset(0.50, 0.16),
-        Offset(0.42, 0.34),
-      ]),
-      FlowerGroup(2, [
-        Offset(0.62, 0.44),
-        Offset(0.78, 0.46),
-        Offset(0.70, 0.62),
-      ]),
-      FlowerGroup(1, [
-        Offset(0.30, 0.68),
-        Offset(0.46, 0.70),
-        Offset(0.38, 0.86),
-      ]),
-    ],
-  ),
-  const Level(
-    id: 8,
+    id: 6,
     name: '方中有方',
     groups: [
       FlowerGroup(0, [
@@ -132,33 +97,7 @@ final List<Level> levels = [
     ],
   ),
   const Level(
-    id: 9,
-    name: '四色繁花',
-    groups: [
-      FlowerGroup(0, [
-        Offset(0.22, 0.20),
-        Offset(0.14, 0.34),
-        Offset(0.30, 0.34),
-      ]),
-      FlowerGroup(1, [
-        Offset(0.78, 0.20),
-        Offset(0.70, 0.34),
-        Offset(0.86, 0.34),
-      ]),
-      FlowerGroup(2, [
-        Offset(0.22, 0.56),
-        Offset(0.14, 0.70),
-        Offset(0.30, 0.70),
-      ]),
-      FlowerGroup(3, [
-        Offset(0.78, 0.56),
-        Offset(0.70, 0.70),
-        Offset(0.86, 0.70),
-      ]),
-    ],
-  ),
-  const Level(
-    id: 10,
+    id: 7,
     name: '一线穿珠',
     groups: [
       FlowerGroup(0, [
@@ -174,24 +113,7 @@ final List<Level> levels = [
     ],
   ),
   const Level(
-    id: 11,
-    name: '六芒枢纽',
-    groups: [
-      FlowerGroup(0, [
-        Offset(0.50, 0.10),
-        Offset(0.84, 0.30),
-        Offset(0.84, 0.66),
-        Offset(0.50, 0.86),
-        Offset(0.16, 0.66),
-        Offset(0.16, 0.30),
-        Offset(0.50, 0.48),
-      ], edges: [
-        (0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 0), (0, 6), (1, 6),
-      ]),
-    ],
-  ),
-  const Level(
-    id: 12,
+    id: 8,
     name: '回旋双环',
     groups: [
       FlowerGroup(0, [
@@ -211,7 +133,7 @@ final List<Level> levels = [
     ],
   ),
   const Level(
-    id: 13,
+    id: 9,
     name: '五角内芯',
     groups: [
       FlowerGroup(0, [
@@ -231,35 +153,7 @@ final List<Level> levels = [
     ],
   ),
   const Level(
-    id: 14,
-    name: '双枢并蒂',
-    groups: [
-      FlowerGroup(0, [
-        Offset(0.28, 0.08),
-        Offset(0.52, 0.16),
-        Offset(0.52, 0.40),
-        Offset(0.28, 0.48),
-        Offset(0.04, 0.40),
-        Offset(0.04, 0.16),
-        Offset(0.28, 0.28),
-      ], edges: [
-        (0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 0), (0, 6), (1, 6),
-      ]),
-      FlowerGroup(1, [
-        Offset(0.72, 0.52),
-        Offset(0.96, 0.60),
-        Offset(0.96, 0.84),
-        Offset(0.72, 0.92),
-        Offset(0.48, 0.84),
-        Offset(0.48, 0.60),
-        Offset(0.72, 0.72),
-      ], edges: [
-        (0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 0), (0, 6), (1, 6),
-      ]),
-    ],
-  ),
-  const Level(
-    id: 15,
+    id: 10,
     name: '双芯迷宫',
     groups: [
       FlowerGroup(0, [
